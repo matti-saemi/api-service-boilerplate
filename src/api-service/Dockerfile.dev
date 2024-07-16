@@ -1,0 +1,21 @@
+# Use Node.js 20 Alpine version as the base image
+FROM node:20-alpine
+
+# Set the working directory
+WORKDIR /app
+
+# Copy package.json and package-lock.json before other files
+# Utilize Docker cache to save re-installing dependencies if unchanged
+COPY package*.json ./
+
+# Install all dependencies (including dev)
+RUN npm install
+
+# Copy all files
+COPY . .
+
+# Expose the listening port
+EXPOSE 3000
+
+# Run nodemon instead of "node"
+CMD [ "npx", "nodemon", "--watch", "src/**/*.ts", "--exec", "ts-node", "src/server.ts" ]

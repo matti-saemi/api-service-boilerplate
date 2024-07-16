@@ -1,0 +1,86 @@
+openapi: 3.0.0
+info:
+  title: Authentication API
+  version: 1.0.0
+paths:
+  /auth/users/{userId}:
+    get:
+      summary: Retrieve a user by ID
+      description: Returns user details by the given user ID
+      tags:
+        - Auth
+      parameters:
+        - name: userId
+          in: path
+          description: User ID to fetch the details
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        404:
+          description: User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: "User not found"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+    BadRequestResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                description: The type of error (e.g., "field").
+              msg:
+                type: string
+                description: A message describing the error.
+              path:
+                type: string
+                description: The path in the request where the error originated.
+              location:
+                type: string
+                description: The location in the request where the error was found.
+    InternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message
+          example: Something went wrong
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: The Access Token of the user
