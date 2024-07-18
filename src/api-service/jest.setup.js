@@ -1,0 +1,12 @@
+process.env.PORT = '3001';
+process.env.NODE_ENV = 'test';
+process.env.REDIS_URL = 'fakeRedisUrl:6379';
+process.env.MONGO_USERNAME = 'username';
+process.env.MONGO_PASSWORD = 'pass';
+process.env.MONGO_HOST = 'localhost';
+process.env.MONGO_PORT = '27017';
+process.env.POSTGRES_USERNAME = 'username';
+process.env.POSTGRES_PASSWORD = 'pass';
+process.env.POSTGRES_HOST = 'localhost';
+process.env.POSTGRES_PORT = '5432';
+process.env.POSTGRES_DB = 'testdatabase';
